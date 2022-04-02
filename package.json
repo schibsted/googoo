@@ -1,0 +1,34 @@
+{
+  "name": "@schibsted/googoo",
+  "version": "1.0.0",
+  "description": "Deploy review app using Serverless framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\"",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/schibsted/googoo.git"
+  },
+  "keywords": [
+    "serverless",
+    "review",
+    "pr"
+  ],
+  "bugs": {
+    "url": "https://github.com/schibsted/googoo/issues"
+  },
+  "homepage": "https://github.com/schibsted/googoo#readme",
+  "author": "Filip Golonka <filipgolonka@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@octokit/rest": "^18.5.2",
+    "aws-sdk": "^2.889.0",
+    "js-yaml": "^4.0.0",
+    "lodash.get": "^4.4.2",
+    "lodash.merge": "^4.6.2",
+    "parse-env-string": "^1.0.0",
+    "yargs": "^17.3.1"
+  }
+}
