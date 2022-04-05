@@ -12,6 +12,13 @@ const params = yargs
         type: 'string',
       }
     })
+    .command('cleanup', 'Cleanup review app(s)', {
+      config: {
+        alias: 'c',
+        description: 'config file',
+        type: 'string',
+      }
+    })
     .parse();
 
 const command = params._.pop() || '';
