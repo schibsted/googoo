@@ -25,7 +25,7 @@ const doCleanup = async (config) => {
       const result = data.items
         .map(item => {
           const matches = config.app.regex.exec(item.name);
-          return matches[0];
+          return matches && matches[0];
         })
         .filter(item => !!item);
 
