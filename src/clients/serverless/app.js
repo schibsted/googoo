@@ -51,7 +51,7 @@ const getAppUrl = async (configFile, useCustomDomain) => {
   const searchFor = useCustomDomain ? '^DomainName' : 'ServiceEndpoint';
   return new Promise(async (resolve, reject) => {
     try {
-      await exec(`serverless info -c ${configFile} --verbose  | grep ${searchFor} | sed s/${searchFor}\\:\\ //g`, {
+      await exec(`serverless info -c ${configFile} --verbose | sed 's/^ *//g' | grep ${searchFor} | sed s/${searchFor}\\:\\ //g`, {
         stdio: 'inherit',
         shell: true,
       }, (error, stdout) => {
