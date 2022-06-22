@@ -2,6 +2,7 @@ const AWS = require('aws-sdk');
 const Github = require('./clients/github');
 const { deleteDomain } = require('./clients/serverless/domain');
 const { removeApp } = require('./clients/serverless/app');
+const writeEnvVariablesFile = require('./helpers/write-env-variables-file');
 
 const doCleanup = async (config) => {
   const getOpenPrs = async () => {
@@ -57,8 +58,12 @@ const doCleanup = async (config) => {
     return;
   }
 
+  await writeEnvVariablesFile({});
+
   for (const app of appsToRemove) {
     process.env.SERVICE_NAME = app;
+    const matches = config.app.regex.exec(app);
+    process.env.PUBLICATION = (matches && matches[2]).substring(1);
 
     if (config.app.useCustomDomain) {
       await deleteDomain();
