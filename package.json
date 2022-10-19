@@ -2,6 +2,7 @@
   "name": "@schibsted/googoo",
   "version": "2.0.0",
   "description": "Deploy review app using Serverless framework",
+  "bin": "index.js",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
