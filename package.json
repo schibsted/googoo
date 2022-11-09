@@ -1,6 +1,6 @@
 {
   "name": "@schibsted/googoo",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Deploy review app using Serverless framework",
   "bin": "index.js",
   "main": "index.js",
