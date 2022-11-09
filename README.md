@@ -38,21 +38,34 @@ module.exports = {
     createAppLink: (url, site, appName) => {
         return `- [**${site}**](${url}) This is great!`;
     },
+    hooks: {
+      beforeBuild: (site, appName) => {},
+      afterBuild: (site, appName) => {},
+      beforeDeploy: (site, appName) => {},
+      afterDeploy: (site, appName, isDeployed, reviewAppUrl) => {},
+    },
 };
 
 ```
 
 Configuration options:
-* github.token - required. Library calls Github API to retrieve PR description and update it with links.
-* github.baseUrl - optional. By default, public Github API will be called, but you might want to use it with your Github Enterprise
-* github.org - required. Github organization where the repo belongs to.
-* github.repo - required. Your Github repository name
-* ci.prNumber - required. PR number. Usually you will retrieve this from env variables in your CI. It is used in the app name.
-* app.prefix - optional. By default, your app name will be prefixed with `review-`, but you might want to customize it
-* app.useCustomDomain - optional. Allows you to have your custom domain to be used with review apps. Keep in mind that the domain has to be delegated to Route53 then and ACM certificate has to exist in us-east-1 region.
-* app.serverlessConfigFile - optional. Name of file with serverless app config. Defaults to `serverless.yml`
-* buildCommand - optional. Allows to call additional script before deploying the app
-* createAppLink - optional. Once the app is deployed, library will post app link as comment in PR. You might want to customize the format.
+* `github.token` - required. Library calls Github API to retrieve PR description and update it with links.
+* `github.baseUrl` - optional. By default, public Github API will be called, but you might want to use it with your Github Enterprise
+* `github.org` - required. Github organization where the repo belongs to.
+* `github.repo` - required. Your Github repository name
+* `ci.prNumber` - required. PR number. Usually you will retrieve this from env variables in your CI. It is used in the app name.
+* `app.prefix` - optional. By default, your app name will be prefixed with `review-`, but you might want to customize it
+* `app.useCustomDomain` - optional. Allows you to have your custom domain to be used with review apps. Keep in mind that the domain has to be delegated to Route53 then and ACM certificate has to exist in us-east-1 region.
+* `app.serverlessConfigFile` - optional. Name of file with serverless app config. Defaults to `serverless.yml`
+* `buildCommand` - optional. Allows to call additional script before deploying the app
+* `createAppLink` - optional. Once the app is deployed, library will post app link as comment in PR. You might want to customize the format.
+* `hooks` - optional. An object consisting of JS functions to call during the process:
+  * `beforeBuild` - called before running the `buildCommand` (only if `buildCommand` is defined)
+  * `afterBuild` - called after running the `buildCommand` (only if `buildCommand` is defined)
+  * `beforeDeploy` - called before running serverless deploy
+  * `afterDeploy` - called after running serverless deploy. It receives two additional arguments:
+    - `isDeployed` - boolean with the status of the deploy
+    - `reviewAppUrl` - final review app URL
 
 Example of `serverless.yml` file:
 

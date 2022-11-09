@@ -30,6 +30,13 @@ const doDeploy = async (config) => {
 
   let appsCreated = [];
 
+  const {
+    beforeBuild = () => {},
+    afterBuild = () => {},
+    beforeDeploy = () => {},
+    afterDeploy = () => {},
+  } = config.hooks || {};
+
   for (const reviewSite of reviewSites) {
     const reviewAppName = `${config.app.prefix}${pr.number}-${reviewSite}`;
 
@@ -40,7 +47,13 @@ const doDeploy = async (config) => {
 
     if (config.buildCommand) {
       console.log(`Running build command "${config.buildCommand}" for app ${reviewAppName}...`);
+
+      beforeBuild(reviewSite, reviewAppName);
+
       const isAppBuilt = await runCommand(config.buildCommand);
+
+      afterBuild(reviewSite, reviewAppName);
+
       if (!isAppBuilt) {
         throw new Error(`Can not build ${reviewAppName} app!`);
       }
@@ -51,13 +64,17 @@ const doDeploy = async (config) => {
       console.log('App does not exist, creating domain...');
       const isDomainCreated = await createDomain();
       if (!isDomainCreated) {
-        throw new Error(`Can not create domain for ${reviewAppName} app`)
+        throw new Error(`Can not create domain for ${reviewAppName} app`);
       }
     }
+
+    beforeDeploy(reviewSite, reviewAppName);
 
     const isDeployed = await deployApp(reviewAppName, config.app.serverlessConfigFile);
 
     const reviewAppUrl = await getAppUrl(config.app.serverlessConfigFile, config.app.useCustomDomain);
+
+    afterDeploy(reviewSite, reviewAppName, isDeployed, reviewAppUrl);
 
     if (!isDeployed) {
       throw new Error('Can not deploy review app');
