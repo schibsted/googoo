@@ -1,4 +1,4 @@
-const AWS = require('aws-sdk');
+const { APIGateway } = require('@aws-sdk/client-api-gateway');
 const Github = require('./clients/github');
 const { deleteDomain } = require('./clients/serverless/domain');
 const { removeApp } = require('./clients/serverless/app');
@@ -16,7 +16,7 @@ const doCleanup = async (config) => {
   };
 
   const getApps = async () => new Promise((resolve, reject) => {
-    const apiGateway = new AWS.APIGateway({apiVersion: '2015-07-09'});
+    const apiGateway = new APIGateway();
 
     apiGateway.getRestApis({ limit: 500 }, (err, data) => {
       if (err) {

@@ -1,6 +1,6 @@
 {
   "name": "@schibsted/googoo",
-  "version": "2.4.0",
+  "version": "3.0.0",
   "description": "Deploy review app using Serverless framework",
   "bin": "index.js",
   "main": "index.js",
@@ -24,8 +24,8 @@
   "author": "Filip Golonka <filipgolonka@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@aws-sdk/client-api-gateway": "^3.637.0",
     "@octokit/rest": "^19.0.0",
-    "aws-sdk": "^2.889.0",
     "js-yaml": "^4.0.0",
     "lodash.get": "^4.4.2",
     "lodash.merge": "^4.6.2",
