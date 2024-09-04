@@ -1,7 +1,7 @@
 const parseEnvString = require('parse-env-string');
 const getEnvFromPR = require('./get-env-from-pr');
 
-const writeEnvVariablesToProcess = (pr) => {
+const exposePrEnvVarsToProcess = (pr) => {
   const prVars = getEnvFromPR(pr);
   const vars = parseEnvString(prVars);
   
@@ -10,4 +10,4 @@ const writeEnvVariablesToProcess = (pr) => {
   }
 }
 
-module.exports = writeEnvVariablesToProcess;
+module.exports = exposePrEnvVarsToProcess;
