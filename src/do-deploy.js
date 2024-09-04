@@ -3,7 +3,7 @@ const specifiedSiteInPr = require('./helpers/specified-site-in-pr');
 const postCommentOnGithub = require('./helpers/post-comment-on-github');
 const updatePrDescriptionWithLinks = require('./helpers/update-pr-description-with-links');
 const writeEnvVariablesFile = require('./helpers/write-env-variables-file');
-const writeEnvVariablesToProcess = require('./helpers/write-env-variables-to-process');
+const exposePrEnvVarsToProcess = require('./helpers/expose-pr-env-variables-to-process');
 const runCommand = require('./clients/run-command');
 const { appExists, deployApp, getAppUrl } = require('./clients/serverless/app');
 const { createDomain } = require('./clients/serverless/domain');
@@ -29,7 +29,7 @@ const doDeploy = async (config) => {
 
   await writeEnvVariablesFile(pr);
 
-  writeEnvVariablesToProcess(pr);
+  exposePrEnvVarsToProcess(pr);
 
   let appsCreated = [];
 
